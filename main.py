@@ -10,18 +10,16 @@ def are_matching(left, right):
 
 
 def find_mismatch(text):
-    opening_brackets_stack = []
-    for a, next_char in enumerate(text):
-        if next_char in "([{":
-            opening_brackets_stack.append(Bracket(next_char, a+1))
-        elif next_char in ")]}":
-            if not opening_brackets_stack:
-                return a+1
-            last_opening_bracket = opening_brackets_stack.pop()
-            if not are_matching(last_opening_bracket.char, next_char):
-                return a+1
-    if opening_brackets_stack:
-        return opening_brackets_stack[0].position
+    stack = []
+    brackets_map = {"(": ")", "{": "}", "[": "]"}
+    for i, char in enumerate(text):
+        if char in "([{":
+            stack.append(char)
+        elif char in ")]}":
+            if not stack or brackets_map[stack.pop()] != char:
+                return i + 1
+    if stack:
+        return len(text) + 1
     else:
         return "Success"
 
