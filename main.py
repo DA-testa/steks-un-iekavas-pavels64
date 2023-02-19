@@ -10,21 +10,29 @@ def are_matching(left, right):
 
 
 def find_mismatch(text):
-    opening_brackets_stack = []
-    for i, next in enumerate(text):
-        if next in "([{":
-            # Process opening bracket, write your code here
-            pass
-
-        if next in ")]}":
-            # Process closing bracket, write your code here
-            pass
+    stack = []
+    brackets_map = {"(": ")", "{": "}", "[": "]"}
+    for i, char in enumerate(text):
+        if char in "([{":
+            stack.append(char)
+        elif char in ")]}":
+            if not stack or brackets_map[stack.pop()] != char:
+                return i + 1
+    if stack:
+        return len(text) + 1
+    else:
+        return "Success"
 
 
 def main():
+    input_type = input()
     text = input()
-    mismatch = find_mismatch(text)
-    # Printing answer, write your code here
+    result = find_mismatch(text)
+
+    if result != "Success":
+        print(result)
+    else:
+        print(result)
 
 
 if __name__ == "__main__":
